@@ -1,0 +1,23 @@
+{
+    "name": "fracture/routing",
+    "type": "library",
+    "homepage": "https://github.com/fracture/routing",
+    "description": "Routing library from Fracture PHP framework for use with composer",
+    "license": "BSD",
+
+    "authors": [
+        {
+        "name": "Mārtiņš Tereško",
+        "email": "martins.teresko@gmail.com",
+        "role": "Creator / Lead Developer"
+        }
+    ],
+
+    "require": {
+        "php": ">=5.4.0"
+    },
+
+    "autoload": {
+        "psr-4": { "": "src/" }
+    }
+}
