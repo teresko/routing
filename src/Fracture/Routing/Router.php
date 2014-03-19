@@ -54,7 +54,7 @@
         }
 
 
-        public function route( $request )
+        public function route( Routable $request )
         {
             $uri = $request->getUri();
             $parameters = $this->gatherRouteValues( $uri );
