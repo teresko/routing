@@ -1,0 +1,37 @@
+{
+    "mandatory-with-static": {
+        "notation": "/:alpha/static/:beta"
+    },
+
+    "like-user-profile": {
+        "notation": "/user/:alpha[/:beta]",
+        "defaults": {
+            "beta": "fallback"
+        },
+        "conditions": {
+            "alpha": "[0-9]+"
+        }
+    },
+
+    "unrouted-defaults": {
+        "notation": "/static[/:alpha][/:beta]",
+        "defaults": {
+            "alpha": "foo",
+            "beta": "bar",
+            "omega": "unrouted"
+        },
+        "conditions": {
+            "alpha": "[a-z]{2,4}"
+        }
+    },
+
+
+    "all-optional": {
+        "notation": "[/:alpha][[/:beta]/:gamma]",
+        "defaults": {
+            "alpha": "foo",
+            "beta": "bar",
+            "gamma": "buz"
+        }
+    }
+}
