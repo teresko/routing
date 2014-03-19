@@ -70,7 +70,7 @@
         public function test_Routing_With_No_Routes()
         {
 
-            $request = $this->getMock( 'Fracture\Http\Request', [ 'getUri', 'setParameters' ] );
+            $request = $this->getMock( 'Fracture\Routing\Routable', [ 'getUri', 'setParameters' ] );
             $request->expects( $this->once() )
                     ->method( 'getUri' )
                     ->will( $this->returnValue( '/not/important' ) );
@@ -111,7 +111,7 @@
                   ->method( 'getMatch' )
                   ->will( $this->returnValue( $parameters ) );
 
-            $request = $this->getMock( 'Fracture\Http\Request', [ 'getUri', 'setParameters' ] );
+            $request = $this->getMock( 'Fracture\Routing\Routable', [ 'getUri', 'setParameters' ] );
             $request->expects( $this->once() )
                     ->method( 'getUri' )
                     ->will( $this->returnValue( $url ) );
