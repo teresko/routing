@@ -1,27 +1,25 @@
 <?php
 
-    namespace Fracture\Routing;
+namespace Fracture\Routing;
 
-    class RouteBuilder
+class RouteBuilder
+{
+
+    private $defaults = [
+        'conditions' => [],
+        'defaults'   => [],
+        'notation'   => '',
+    ];
+
+    public function create($name, $parameters)
     {
+        $parameters += $this->defaults;
 
-        private $defaults = [
-            'conditions' => [],
-            'defaults'   => [],
-            'notation'   => '',
-        ];
+        $pattern = new Pattern($parameters['notation'], $parameters['conditions']);
+        $instance = new Route($pattern, $name, $parameters['defaults']);
 
-        public function create( $name, $parameters )
-        {
-            $parameters += $this->defaults;
+        $pattern->prepare();
 
-            $pattern = new Pattern( $parameters[ 'notation' ], $parameters[ 'conditions' ] );
-            $instance = new Route( $pattern, $name, $parameters[ 'defaults' ] );
-
-            $pattern->prepare();
-
-            return $instance;
-        }
-
-
+        return $instance;
     }
+}

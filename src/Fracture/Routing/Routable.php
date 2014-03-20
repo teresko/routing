@@ -1,9 +1,9 @@
 <?php
 
-    namespace Fracture\Routing;
+namespace Fracture\Routing;
 
-    interface Routable
-    {
-        public function getUri();
-        public function setParameters(array $parameters);
-    }
+interface Routable
+{
+    public function getUri();
+    public function setParameters(array $parameters);
+}

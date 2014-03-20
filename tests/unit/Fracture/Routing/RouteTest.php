@@ -1,113 +1,107 @@
 <?php
 
 
-    namespace Fracture\Routing;
+namespace Fracture\Routing;
 
-    use Exception;
-    use ReflectionClass;
-    use PHPUnit_Framework_TestCase;
+use Exception;
+use ReflectionClass;
+use PHPUnit_Framework_TestCase;
 
+class RouteTest extends PHPUnit_Framework_TestCase
+{
 
-    class RouteTest  extends PHPUnit_Framework_TestCase
+    /**
+     * @covers Fracture\Routing\Route::__construct
+     * @covers Fracture\Routing\Route::getMatch
+     *
+     * @covers Fracture\Routing\Route::cleanMatches
+     */
+    public function testPatternExpressionRetrieved()
     {
-
-        /**
-         * @covers Fracture\Routing\Route::__construct
-         * @covers Fracture\Routing\Route::getMatch
-         *
-         * @covers Fracture\Routing\Route::cleanMatches
-         */
-        public function test_Pattern_Expression_Retrieved()
-        {
-            $pattern = $this->getMock( 'Fracture\Routing\Pattern', [ 'getExpression' ], [ '' ] );
-            $pattern->expects($this->once())
-                    ->method('getExpression')
-                    ->will($this->returnValue('##'));
+        $pattern = $this->getMock('Fracture\Routing\Pattern', ['getExpression'], ['']);
+        $pattern->expects($this->once())
+                ->method('getExpression')
+                ->will($this->returnValue('##'));
 
 
-            $unit = new Route( $pattern, 'foo' );
-            $unit->getMatch('/uri');
-        }
+        $unit = new Route($pattern, 'foo');
+        $unit->getMatch('/uri');
+    }
 
-        /**
-         * @dataProvider simple_Match_Provider
-         * @covers Fracture\Routing\Route::__construct
-         * @covers Fracture\Routing\Route::getMatch
-         *
-         * @covers Fracture\Routing\Route::cleanMatches
-         *
-         * @depends test_Pattern_Expression_Retrieved
-         */
-        public function test_Simple_Matches( $expression, $url, $expected )
-        {
-            $pattern = $this->getMock( 'Fracture\Routing\Pattern', [ 'getExpression' ], [ '' ] );
-            $pattern->expects($this->once())
-                    ->method('getExpression')
-                    ->will( $this->returnValue( $expression ) );
+    /**
+     * @dataProvider provideSimpleMatches
+     * @covers Fracture\Routing\Route::__construct
+     * @covers Fracture\Routing\Route::getMatch
+     *
+     * @covers Fracture\Routing\Route::cleanMatches
+     *
+     * @depends testPatternExpressionRetrieved
+     */
+    public function testSimpleMatches($expression, $url, $expected)
+    {
+        $pattern = $this->getMock('Fracture\Routing\Pattern', ['getExpression'], ['']);
+        $pattern->expects($this->once())
+                ->method('getExpression')
+                ->will($this->returnValue($expression));
 
-            $route = new Route( $pattern, 'not-important' );
-            $this->assertEquals( $expected, $route->getMatch( $url ) );
-        }
+        $route = new Route($pattern, 'not-important');
+        $this->assertEquals($expected, $route->getMatch($url));
+    }
 
-        public function  simple_Match_Provider()
-        {
-            return include FIXTURE_PATH . '/routes-simple.php';
-        }
-
-
-        /**
-         * @dataProvider with_Defaults_Match_Provider
-         * @covers Fracture\Routing\Route::__construct
-         * @covers Fracture\Routing\Route::getMatch
-         *
-         * @covers Fracture\Routing\Route::cleanMatches
-         *
-         * @depends test_Pattern_Expression_Retrieved
-         */
-        public function test_With_Default_Matches( $expression, $url, $defaults, $expected )
-        {
-            $pattern = $this->getMock( 'Fracture\Routing\Pattern', [ 'getExpression' ], [ '' ] );
-            $pattern->expects($this->once())
-                    ->method('getExpression')
-                    ->will( $this->returnValue( $expression ) );
-
-            $route = new Route( $pattern, 'not-important', $defaults );
-            $this->assertEquals( $expected, $route->getMatch( $url ) );
-        }
-
-        public function  with_Defaults_Match_Provider()
-        {
-            return include FIXTURE_PATH . '/routes-with-defaults.php';
-        }
-
-
-        /**
-         * @dataProvider failing_Match_Provider
-         * @covers Fracture\Routing\Route::__construct
-         * @covers Fracture\Routing\Route::getMatch
-         *
-         * @covers Fracture\Routing\Route::cleanMatches
-         *
-         * @depends test_Pattern_Expression_Retrieved
-         */
-        public function test_Failing_Matches( $expression, $url )
-        {
-            $pattern = $this->getMock( 'Fracture\Routing\Pattern', [ 'getExpression' ], [ '' ] );
-            $pattern->expects($this->once())
-                    ->method('getExpression')
-                    ->will( $this->returnValue( $expression ) );
-
-            $route = new Route( $pattern, 'not-important' );
-            $this->assertFalse( $route->getMatch( $url ) );
-        }
-
-        public function  failing_Match_Provider()
-        {
-            return include FIXTURE_PATH . '/routes-unmatched.php';
-        }
-
-
+    public function provideSimpleMatches()
+    {
+        return include FIXTURE_PATH . '/routes-simple.php';
     }
 
 
-?>
+    /**
+     * @dataProvider provideMatchesWithDefaults
+     * @covers Fracture\Routing\Route::__construct
+     * @covers Fracture\Routing\Route::getMatch
+     *
+     * @covers Fracture\Routing\Route::cleanMatches
+     *
+     * @depends testPatternExpressionRetrieved
+     */
+    public function testWithDefaultMatches($expression, $url, $defaults, $expected)
+    {
+        $pattern = $this->getMock('Fracture\Routing\Pattern', ['getExpression'], ['']);
+        $pattern->expects($this->once())
+                ->method('getExpression')
+                ->will($this->returnValue($expression));
+
+        $route = new Route($pattern, 'not-important', $defaults);
+        $this->assertEquals($expected, $route->getMatch($url));
+    }
+
+    public function provideMatchesWithDefaults()
+    {
+        return include FIXTURE_PATH . '/routes-with-defaults.php';
+    }
+
+
+    /**
+     * @dataProvider provideFailingMatch
+     * @covers Fracture\Routing\Route::__construct
+     * @covers Fracture\Routing\Route::getMatch
+     *
+     * @covers Fracture\Routing\Route::cleanMatches
+     *
+     * @depends testPatternExpressionRetrieved
+     */
+    public function testFailingMatches($expression, $url)
+    {
+        $pattern = $this->getMock('Fracture\Routing\Pattern', ['getExpression'], ['']);
+        $pattern->expects($this->once())
+                ->method('getExpression')
+                ->will($this->returnValue($expression));
+
+        $route = new Route($pattern, 'not-important');
+        $this->assertFalse($route->getMatch($url));
+    }
+
+    public function provideFailingMatch()
+    {
+        return include FIXTURE_PATH . '/routes-unmatched.php';
+    }
+}

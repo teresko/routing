@@ -1,8 +1,8 @@
 <?php
 
-    namespace Fracture\Routing;
+namespace Fracture\Routing;
 
-    interface Matchable
-    {
-        public function getMatch( $uri );
-    }
+interface Matchable
+{
+    public function getMatch($uri);
+}
