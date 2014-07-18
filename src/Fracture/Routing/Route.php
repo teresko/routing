@@ -20,6 +20,14 @@ class Route implements Matchable
     }
 
 
+    /**
+     * Method attempts to apply the generated regexp to the URI
+     * and, if successful, returns a list of parsed parameters.
+     *
+     * @param string $uri
+     *
+     * @return array|false
+     */
     public function getMatch($uri)
     {
         $expression = $this->pattern->getExpression();
