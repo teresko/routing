@@ -1,0 +1,42 @@
+imports:
+    - php
+
+filter:
+    paths: [src/*]
+
+build_failure_conditions:
+    - 'issues.label("coding-style").exists'
+    - 'project.metric("scrutinizer.test_coverage", < 1)'
+
+tools:
+    external_code_coverage:
+        enabled: true
+        timeout: 1800
+    php_cs_fixer:
+        enabled: true
+        config:
+            level: psr2
+    php_loc:
+        enabled: true
+    php_pdepend:
+        excluded_dirs: ['tests']
+        enabled: true
+        command: pdepend
+        configuration_file: null
+        suffixes:
+            - php
+    php_analyzer: true
+    php_analyzer:
+        filter:
+            paths: ["src/*", "tests/*"]
+    sensiolabs_security_checker: true
+    php_cpd:
+        enabled: true
+        command: phpcpd
+        excluded_dirs: { }
+        names: ['*.php']
+        min_lines: 5
+        min_tokens: 70
+        filter:
+            excluded_paths: ['vendor/*', 'app/*', 'web/*']
+            paths: { }
