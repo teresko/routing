@@ -15,6 +15,7 @@ class RouteTest extends PHPUnit_Framework_TestCase
      * @covers Fracture\Routing\Route::getMatch
      *
      * @covers Fracture\Routing\Route::cleanMatches
+     * @covers Fracture\Routing\Route::removeNoise
      */
     public function testPatternExpressionRetrieved()
     {
@@ -34,6 +35,7 @@ class RouteTest extends PHPUnit_Framework_TestCase
      * @covers Fracture\Routing\Route::getMatch
      *
      * @covers Fracture\Routing\Route::cleanMatches
+     * @covers Fracture\Routing\Route::removeNoise
      *
      * @depends testPatternExpressionRetrieved
      */
@@ -60,6 +62,7 @@ class RouteTest extends PHPUnit_Framework_TestCase
      * @covers Fracture\Routing\Route::getMatch
      *
      * @covers Fracture\Routing\Route::cleanMatches
+     * @covers Fracture\Routing\Route::removeNoise
      *
      * @depends testPatternExpressionRetrieved
      */
@@ -86,6 +89,7 @@ class RouteTest extends PHPUnit_Framework_TestCase
      * @covers Fracture\Routing\Route::getMatch
      *
      * @covers Fracture\Routing\Route::cleanMatches
+     * @covers Fracture\Routing\Route::removeNoise
      *
      * @depends testPatternExpressionRetrieved
      */
@@ -112,6 +116,7 @@ class RouteTest extends PHPUnit_Framework_TestCase
      * @covers Fracture\Routing\Route::getMatch
      *
      * @covers Fracture\Routing\Route::cleanMatches
+     * @covers Fracture\Routing\Route::removeNoise
      *
      * @depends testPatternExpressionRetrieved
      */

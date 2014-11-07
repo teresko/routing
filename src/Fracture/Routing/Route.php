@@ -38,6 +38,7 @@ class Route implements Matchable
         }
 
         $matches = $this->cleanMatches($matches);
+        $matches = $this->removeNoise($matches);
         return $matches + $this->defaults;
     }
 
@@ -53,5 +54,15 @@ class Route implements Matchable
         }
 
         return $list;
+    }
+
+
+    protected function removeNoise($matches)
+    {
+        foreach ($matches as $key => $value) {
+            $matches[$key] = str_replace(['_', '-'], '', $value);
+        }
+
+        return $matches;
     }
 }
