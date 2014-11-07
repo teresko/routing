@@ -55,6 +55,32 @@ class RouteTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * @dataProvider provideConvertedMatches
+     * @covers Fracture\Routing\Route::__construct
+     * @covers Fracture\Routing\Route::getMatch
+     *
+     * @covers Fracture\Routing\Route::cleanMatches
+     *
+     * @depends testPatternExpressionRetrieved
+     */
+    public function testConvertedMatches($expression, $url, $expected)
+    {
+        $pattern = $this->getMock('Fracture\Routing\Pattern', ['getExpression'], ['']);
+        $pattern->expects($this->once())
+                ->method('getExpression')
+                ->will($this->returnValue($expression));
+
+        $route = new Route($pattern, 'not-important');
+        $this->assertEquals($expected, $route->getMatch($url));
+    }
+
+    public function provideConvertedMatches()
+    {
+        return include FIXTURE_PATH . '/routes-converted.php';
+    }
+
+
+    /**
      * @dataProvider provideMatchesWithDefaults
      * @covers Fracture\Routing\Route::__construct
      * @covers Fracture\Routing\Route::getMatch
