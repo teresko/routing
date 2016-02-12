@@ -17,5 +17,6 @@ the user's input in and abstracted representation of request, as long as it impl
 Since the library is still in development, the recommended version to install would be "the latest".
 You can do it by rnning following command:
 
-    composer require fracture/routing:dev-master
-
+```sh
+composer require fracture/routing:dev-master
+```
