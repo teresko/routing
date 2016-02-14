@@ -2,6 +2,8 @@
 
 namespace Fracture\Routing;
 
+use Fracture\Http\Routable;
+
 class Router
 {
 
