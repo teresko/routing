@@ -76,7 +76,7 @@ class RouterTest extends PHPUnit_Framework_TestCase
     public function testRoutingWithNoRoutes()
     {
 
-        $request = $this->getMock('Fracture\Routing\Routable', ['getUri', 'setParameters']);
+        $request = $this->getMock('Fracture\Http\Routable', ['getUri', 'setParameters']);
         $request->expects($this->once())
                 ->method('getUri')
                 ->will($this->returnValue('/not/important'));
@@ -117,7 +117,7 @@ class RouterTest extends PHPUnit_Framework_TestCase
               ->method('getMatch')
               ->will($this->returnValue($parameters));
 
-        $request = $this->getMock('Fracture\Routing\Routable', ['getUri', 'setParameters']);
+        $request = $this->getMock('Fracture\Http\Routable', ['getUri', 'setParameters']);
         $request->expects($this->once())
                 ->method('getUri')
                 ->will($this->returnValue($url));
