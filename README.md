@@ -89,22 +89,16 @@ var_dump($request->getParameter('resource'));
 The `import()` method of the router expects a list of defined routes. Each route is an array containing `'notation'` element. It also can optionally have `'conditions'` and `'defaults'` fields.
 
 ```php
-<?php
-$configuration = [
-    // other routes
 
-    'primary' => [
-        'notation' => ':resource[/:action]',
-        'conditions' => [
-            // list custom conditions
-        ],
-        'defaults' => [
-            // list of fallback values
-        ]
+'primary' => [
+    'notation' => ':resource[/:action]',
+    'conditions' => [
+        // list custom conditions
     ],
-
-    // even more routes
-];
+    'defaults' => [
+        // list of fallback values
+    ]
+],
 ```
 
 When routers is attempting to match the URI to the list of defined routes, it iterates **starting from top element and continues till either a match is found or the list has ended**. Therefore to increase the priority of any of defined routes, you move it higher in the list.
@@ -130,8 +124,25 @@ These parts are:
 
   In the above given example the static text is `document`, `/view`, `/` and `.` (dot).
 
-- **optional element** `[ ]`
+- **optional element**
 
-  If any part of notation is wrapped in square brackets, it becomes non-mandatory. Any notation's part and combination of parts can be defined as optional element. This also means that optional elements can be nested.
+  If any part of notation is wrapped in `[]` (square brackets), it becomes non-mandatory. Any notation's part and combination of parts can be defined as optional element. This also means that optional elements can be nested.
 
   In the example above the part, that are defined as optional were `/view` and `.:extension`.
+
+
+####Conditions
+
+For each route it is possible to define custom conditions, that the tokens will be expected to match. By default every token is attempting to match an URI fragment, that **does not** contain `/\.,;?`. To change this behavior each route definition can optionally have a `conditions` element.
+
+The conditions are set as array of `key => value` pairs, where keys correspond to names of tokens and values contain regular expression fragments. This is demonstrated in the following excerpt from route configuration array:
+
+```
+'notation' => ':project/[:name]/:iteration',
+'conditions' => [
+    'name' => '[A-Z][a-z]+-[0-9]{2}',
+    'iteration' => '[0-9]+',
+],
+```
+
+In this example you see a notation with three defined tokens, where `:name` token is optional. There also are two custom conditions defines, assigned to tokens `:name` and `:iteration`.
