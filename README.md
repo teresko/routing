@@ -177,3 +177,29 @@ This feature can also be used to add "silent parameters" for a matched URI:
 ```
 
 By having these "silent parameters", your code is not restricted to only using string-values that were found in URI.
+
+
+##Use of routed request
+
+See documentation for [**fracture/http**](https://github.com/fracture/http).
+
+
+##Various tips
+
+###Cleaner configuration
+
+In a real-world project your application will almost always have more than couple routes. Which can result in extensive configuration, that would make the initialization phase of your project (like a bootstrap file) hard to read and filled with clutter.
+
+To prevent that, you can segregate the configuration into a dedicated file.
+
+```php
+<?php
+// other code
+
+$configuration = json_decode(file_get_contents(__DIR__ . '/config/routes.json'), true);
+
+$router = new Fracture\Routing\Router(new Fracture\Routing\RouteBuilder);
+$router->import($configuration);
+```
+
+This can also be combined with environment variables, for differentiating between development, staging and production environments.
