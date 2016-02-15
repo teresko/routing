@@ -2,7 +2,7 @@
     "name": "fracture/routing",
     "type": "library",
     "homepage": "https://github.com/fracture/routing",
-    "description": "Routing library from Fracture PHP framework for use with composer",
+    "description": "Simple routing library without dispatcher",
     "license": "BSD",
 
     "authors": [
@@ -14,8 +14,8 @@
     ],
 
     "require": {
-        "php": ">=5.4.0",
-        "fracture/http": ">=0.3.0"        
+        "php": ">=5.5.0",
+        "fracture/http": ">=0.3.0"
     },
 
     "autoload": {
