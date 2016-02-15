@@ -146,3 +146,34 @@ The conditions are set as array of `key => value` pairs, where keys correspond t
 ```
 
 In this example you see a notation with three defined tokens, where `:name` token is optional. There also are two custom conditions defines, assigned to tokens `:name` and `:iteration`.
+
+
+####Defaults
+
+When URI pattern has optional parts, you inevitably will have some requests where those parts were missing. In which case by default the `Fracture\Request` will return `null`, when trying to retrieve that parameter. But this behavior is not always the most useful.
+
+If you want for optional URI part to have defined fallback values, which are used, when fragment was absent. That can be done by appending the definition of a route:
+
+```
+'notation' => ':project/[:name]',
+'defaults' => [
+    'name' => 'unnamed',
+],
+```
+
+In the example above, if notation is matched, but the corresponding was not present in URI, the request abstraction will receive `"unnamed"` as value for `'name'` parameter.
+
+This feature can also be used to add "silent parameters" for a matched URI:
+
+```
+'notation' => 'verify/[:hash]',
+'conditions' => [
+    'hash' => '[a-z0-9]{32}',
+],
+'defaults' => [
+    'resource' => 'registration',
+    'action'   => 'complete',
+],
+```
+
+By having these "silent parameters", your code is not restricted to only using string-values that were found in URI.
