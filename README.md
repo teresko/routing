@@ -163,20 +163,6 @@ If you want for optional URI part to have defined fallback values, which are use
 
 In the example above, if notation is matched, but the corresponding was not present in URI, the request abstraction will receive `"unnamed"` as value for `'name'` parameter.
 
-This feature can also be used to add "silent parameters" for a matched URI:
-
-```
-'notation' => 'verify/[:hash]',
-'conditions' => [
-    'hash' => '[a-z0-9]{32}',
-],
-'defaults' => [
-    'resource' => 'registration',
-    'action'   => 'complete',
-],
-```
-
-By having these "silent parameters", your code is not restricted to only using string-values that were found in URI.
 
 
 ##Use of routed request
@@ -203,3 +189,22 @@ $router->import($configuration);
 ```
 
 This can also be combined with environment variables, for differentiating between development, staging and production environments.
+
+
+###Silent parameters
+
+The "defaults" part of the route definition comes with an unintentional feature: an ability for matched route to enhance request abstraction with additional parameters.
+
+
+```
+'notation' => 'verify/[:hash]',
+'conditions' => [
+    'hash' => '[a-z0-9]{32}',
+],
+'defaults' => [
+    'resource' => 'registration',
+    'action'   => 'complete',
+],
+```
+
+By having these "silent parameters", your code is not restricted to only using string-values that were found in URI.
