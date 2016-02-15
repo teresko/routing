@@ -41,7 +41,7 @@ class Router
 
     protected function gatherRouteValues($uri)
     {
-        foreach ($this->pool as $name => $route) {
+        foreach ($this->pool as $route) {
             $parameters = $route->getMatch($uri);
 
             if (empty($parameters) === false) {
