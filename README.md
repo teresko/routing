@@ -193,7 +193,7 @@ This can also be combined with environment variables, for differentiating betwee
 
 ###Silent parameters
 
-The `defaults` part of the route definition comes with an additional feature: the ability for a matched route to enhance request abstraction with additional parameters.
+It is not required for parameters specified in `defaults` part of the route definition to appear in the `notation`. This provides the ability for a matched route to enhance request abstraction by providing additional parameters.
 
 
 ```
@@ -207,4 +207,4 @@ The `defaults` part of the route definition comes with an additional feature: th
 ],
 ```
 
-By having these "silent parameters", your code is not restricted to only using string-values that were found in the URI.
+By having these "silent parameters", your code is not restricted to only using values provided in the URI.
