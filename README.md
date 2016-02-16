@@ -7,7 +7,7 @@
 
 ##Introduction
 
-This component is a simple routing library, that is made to be easily compatible with other libs. It **does not include** any functionality for dispatching. Instead it focuses on "packaging" the user's input in an abstracted representation of request.
+This component is a simple routing library, that is made to be easily compatible with other libraries. It **does not include** any functionality for dispatching. Instead it focuses on "packaging" the user's input in an abstracted representation of request.
 
 
 ##Installation
@@ -86,7 +86,7 @@ var_dump($request->getParameter('resource'));
 
 ###Definition of routes
 
-The `import()` method of the router expects a list of defined routes. Each route is an array containing `'notation'` element. It also can optionally have `'conditions'` and `'defaults'` fields.
+The `import()` method of the router expects a list of defined routes. Each route is an array containing `'notation'` elements. Routes also optionally have `'conditions'` and `'defaults'` fields.
 
 ```php
 
@@ -101,7 +101,7 @@ The `import()` method of the router expects a list of defined routes. Each route
 ],
 ```
 
-When routers is attempting to match the URI to the list of defined routes, it iterates **starting from top element and continues till either a match is found or the list has ended**. Therefore to increase the priority of any of defined routes, you move it higher in the list.
+When the router attempts to match a URI to the list of defined routes, it iterates **starting from top element and continues until either a match is found, or the list has ended**. Therefore, to increase the priority of any of defined routes, you move it higher in the list.
 
 
 ####Notation format
@@ -120,22 +120,22 @@ These parts are:
 
 - **static text**
 
-  These are parts of notation, which has not direct computational value, but only serve to structure the URI and make it easier to read and/or identify.
+  These are parts of notation, which does not have a direct computational value, but serve to structure the URI and make it easier to read and/or identify.
 
   In the above given example the static text is `document`, `/view`, `/` and `.` (dot).
 
 - **optional element**
 
-  If any part of notation is wrapped in `[]` (square brackets), it becomes non-mandatory. Any notation's part and combination of parts can be defined as optional element. This also means that optional elements can be nested.
+  If any part of notation is wrapped in `[]` (square brackets), it becomes non-mandatory. Any notation's part, or combination of parts, can be defined as optional element. This also means that optional elements can be nested.
 
-  In the example above the part, that are defined as optional were `/view` and `.:extension`.
+  In the example above the part, `/view` and `.:extension` are declared as optional.
 
 
 ####Conditions
 
-For each route it is possible to define custom conditions, that the tokens will be expected to match. By default every token is attempting to match an URI fragment, that **does not** contain `/\.,;?`. To change this behavior each route definition can optionally have a `conditions` element.
+For each route it is possible to define custom conditions, that limit acceptable matches for tokens. By default, every token attempts to match a URI fragment that **does not** contain `/\.,;?`. To change this behavior, each route definition can optionally have a `conditions` element.
 
-The conditions are set as array of `key => value` pairs, where keys correspond to names of tokens and values contain regular expression fragments. This is demonstrated in the following excerpt from route configuration array:
+The conditions are set as array of `key => value` pairs, where keys correspond to names of tokens, and values contain regular expression fragments. This is demonstrated in the following example route:
 
 ```
 'notation' => ':project/[:name]/:iteration',
@@ -145,14 +145,14 @@ The conditions are set as array of `key => value` pairs, where keys correspond t
 ],
 ```
 
-In this example you see a notation with three defined tokens, where `:name` token is optional. There also are two custom conditions defines, assigned to tokens `:name` and `:iteration`.
+In this example, a notation has three defined tokens. The token `:name` token is optional. Additionally, both `:name` and `:iteration` have required conditions.
 
 
 ####Defaults
 
-When URI pattern has optional parts, you inevitably will have some requests where those parts were missing. In which case by default the `Fracture\Request` will return `null`, when trying to retrieve that parameter. But this behavior is not always the most useful.
+When a URI pattern has optional parts, some requests will match where those parts were missing. In this case, by default, `Fracture\Request` will return `null` when trying to retrieve that parameter.
 
-If you want for optional URI part to have defined fallback values, which are used, when fragment was absent. That can be done by appending the definition of a route:
+To override `null` and specify default values, a `defaults` array can be provided in the route definition:
 
 ```
 'notation' => ':project/[:name]',
@@ -161,7 +161,7 @@ If you want for optional URI part to have defined fallback values, which are use
 ],
 ```
 
-In the example above, if notation is matched, but the corresponding was not present in URI, the request abstraction will receive `"unnamed"` as value for `'name'` parameter.
+In the example above, if `notation` is matched, but the corresponding `:name` was not present in URI, the request abstraction will receive `"unnamed"` as value for `'name'` parameter.
 
 
 
@@ -174,9 +174,9 @@ See documentation for [**fracture/http**](https://github.com/fracture/http).
 
 ###Cleaner configuration
 
-In a real-world project your application will almost always have more than couple routes. Which can result in extensive configuration, that would make the initialization phase of your project (like a bootstrap file) hard to read and filled with clutter.
+Real-world applications will almost always have more than a few routes. This can result in extensive configuration, which would make the initialization phase of your project (like a bootstrap file) hard to read and filled with clutter.
 
-To prevent that, you can segregate the configuration into a dedicated file.
+To prevent that, you can move the configuration into a dedicated file.
 
 ```php
 <?php
@@ -193,7 +193,7 @@ This can also be combined with environment variables, for differentiating betwee
 
 ###Silent parameters
 
-The "defaults" part of the route definition comes with an unintentional feature: an ability for matched route to enhance request abstraction with additional parameters.
+The `defaults` part of the route definition comes with an additional feature: the ability for a matched route to enhance request abstraction with additional parameters.
 
 
 ```
@@ -207,4 +207,4 @@ The "defaults" part of the route definition comes with an unintentional feature:
 ],
 ```
 
-By having these "silent parameters", your code is not restricted to only using string-values that were found in URI.
+By having these "silent parameters", your code is not restricted to only using string-values that were found in the URI.
